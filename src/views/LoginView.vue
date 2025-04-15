@@ -44,12 +44,14 @@
             <button class="btn btn-danger" @click="handleLogout">
                 Cerrar sesión
             </button>
+            <ListaFavoritos />
         </div>
     </div>
 </template>
 <script setup>
 import { ref } from 'vue';
 import { useAuthStore } from '../stores/authStore';
+import ListaFavoritos from '../components/ListaFavoritos.vue';
 
 const isRegistering = ref(false);
 const authStore = useAuthStore();

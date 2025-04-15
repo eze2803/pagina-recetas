@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import InicioView from '@/views/InicioView.vue'
-import RecetasView from '@/views/RecetasView.vue'
 import LoginView from '@/views/LoginView.vue'
+import FavoritosView from '@/views/FavoritosView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -10,9 +10,9 @@ const routes: Array<RouteRecordRaw> = [
     component: InicioView
   },
   {
-    path: '/recetas',
-    name: 'Recetas',
-    component: RecetasView,
+    path: '/favoritos',
+    name: 'favoritos',
+    component: FavoritosView,
     meta: { requiresAuth: true, }
   },
   {

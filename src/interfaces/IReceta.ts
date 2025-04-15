@@ -11,6 +11,10 @@ export interface IReceta {
     id?: number;
     title?: string;
     image?: string;
-    extendedIngredients: Ingredients[];
-    analyzedInstructions: { steps: IStep[] }[];
+    summary?: string;
+    extendedIngredients?: Ingredients[];
+    analyzedInstructions?: {
+        name: string;
+        steps: IStep[]
+    }[];
 }
