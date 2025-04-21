@@ -12,7 +12,7 @@
                     <ul v-if="ingredients.length > 0">
                         <li v-for="(ing, i) in ingredients" :key="i">{{ ing.original }}</li>
                     </ul>
-                    <!-- Resumen de la receta -->
+
                     <div v-if="recetaSeleccionada?.summary" class="mt-3">
                         <h6>Resumen:</h6>
                         <div v-html="recetaSeleccionada.summary"></div>

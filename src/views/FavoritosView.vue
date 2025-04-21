@@ -18,7 +18,6 @@
       <p>Debes iniciar sesión para ver tus favoritos.</p>
     </div>
 
-    <!-- Modal -->
     <ModalReceta ref="modalRecetaRef" />
   </div>
 </template>

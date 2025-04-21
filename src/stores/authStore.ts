@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { login, register, logout } from '@/firebase/auth'; // revisá el path según tu estructura
+import { login, register, logout } from '@/firebase/auth';
 import { User } from 'firebase/auth';
 
 export const useAuthStore = defineStore('auth', () => {

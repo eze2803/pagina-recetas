@@ -41,7 +41,7 @@ class RecetasService {
             let pasos = receta.analyzedInstructions?.[0]?.steps || [];
             let ingredientes = receta.extendedIngredients || [];
 
-            // Si no vienen, buscar desde la API por ID
+
             if ((!pasos.length || !ingredientes.length) && receta.id) {
                 const res = await fetch(`https://api.spoonacular.com/recipes/${receta.id}/information?apiKey=2d8012f6935b4b8884d4b26c3edaaefc`);
                 const data = await res.json();
