@@ -29,16 +29,20 @@ import { useAuthStore } from '@/stores/authStore';
 import { getFavorites } from '@/firebase/favorites';
 import { IFavoritos } from '@/interfaces/IFavoritos';
 import ModalReceta from '@/components/ModalReceta.vue';
-import RecetasService from '@/services/RecetasServiceClass';
+import recetas from '@/services/recetasService';
+import { useRouter } from 'vue-router';
 
 const authStore = useAuthStore();
 const favoritos = ref<IFavoritos[]>([]);
-const recetas = new RecetasService();
+const router = useRouter();
 
 const modalRecetaRef = ref();
 
 const cargarFavorites = async () => {
-  if (!authStore.user) return;
+  if (!authStore.user) {
+    router.push('/login');
+    return;
+  }
   try {
     favoritos.value = await getFavorites(authStore.user.uid);
   } catch (error) {

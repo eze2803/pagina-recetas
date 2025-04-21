@@ -9,7 +9,6 @@
             <button class="btn btn-primary w-100" @click="verReceta(item)">Ver receta</button>
             <div v-if="error" class="alert alert-danger text-center">{{ error }}</div>
 
-            <!-- Botón para agregar a favoritos -->
             <button v-if="authStore.user" class="btn btn-outline-danger mt-2" @click="agregarAFavoritos(item)">
               ❤️ Agregar a favoritos
             </button>
@@ -17,16 +16,14 @@
         </div>
       </div>
     </div>
+    <ModalReceta ref="modalRecetaRef" />
   </div>
-
-  <!-- Modal para mostrar la receta -->
-  <ModalReceta ref="modalRecetaRef" />
 </template>
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { useAuthStore } from '../stores/authStore';
-import recetas from '@/services/recetaService';
+import recetas from '@/services/recetasService';
 import ModalReceta from '../components/ModalReceta.vue';
 import { IReceta } from '../interfaces/IReceta';
 import { agregarFavoritos } from '../firebase/favorites';
@@ -37,7 +34,6 @@ const items = recetas.getRecetas();
 const error = recetas.getError();
 const modalRecetaRef = ref();
 
-// Función para cargar las recetas
 const getRecetas = async () => {
   try {
     await recetas.fetchRecetas();
@@ -46,23 +42,17 @@ const getRecetas = async () => {
   }
 };
 
-// Función para abrir el modal de receta
 const verReceta = async (receta: IReceta) => {
-  if (modalRecetaRef.value) {
-    await modalRecetaRef.value.abrirModal(receta);
-  }
-  if (error.value) {
-    alert('Error al cargar la receta');
-  }
-
+  await recetas.seleccionarReceta(receta);
+  modalRecetaRef.value.abrirModal();
 };
 
-// Función para agregar receta a favoritos
 const agregarAFavoritos = async (receta: IReceta) => {
   if (!authStore.user) {
     alert('Debes iniciar sesión para agregar a favoritos');
     return;
   }
+
   const favorito: IFavoritos = {
     id: receta.id?.toString() || '',
     title: receta.title || '',
@@ -84,9 +74,3 @@ onMounted(() => {
   getRecetas();
 });
 </script>
-
-<style scoped>
-.btn {
-  margin-top: 10px;
-}
-</style>

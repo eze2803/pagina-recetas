@@ -8,14 +8,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
-                    <div v-if="loading" class="alert alert-info text-center">
-                        Cargando receta...
-                    </div>
-
                     <h6 v-if="ingredients.length > 0">Ingredientes:</h6>
                     <ul v-if="ingredients.length > 0">
                         <li v-for="(ing, i) in ingredients" :key="i">{{ ing.original }}</li>
                     </ul>
+                    <!-- Resumen de la receta -->
+                    <div v-if="recetaSeleccionada?.summary" class="mt-3">
+                        <h6>Resumen:</h6>
+                        <div v-html="recetaSeleccionada.summary"></div>
+                    </div>
 
                     <h6 v-if="steps.length > 0">Pasos:</h6>
                     <ol v-if="steps.length > 0">
@@ -30,39 +31,24 @@
 <script setup lang="ts">
 import { ref, onMounted, defineExpose } from 'vue';
 import * as bootstrap from 'bootstrap';
-import RecetasService from '@/services/RecetasServiceClass';
+import recetas from '@/services/recetasService';
 
-
-const recetas = new RecetasService();
 const recetaSeleccionada = recetas.getRecetaSeleccionada();
 const ingredients = recetas.getIngredients();
 const steps = recetas.getSteps();
-const loading = recetas.getLoading();
 
 const modalRef = ref<HTMLElement | null>(null);
 let modalReceta: bootstrap.Modal;
 
-
 onMounted(() => {
     if (modalRef.value) {
         modalReceta = new bootstrap.Modal(modalRef.value);
-    } else {
-        console.error('Modal element no encontrado');
     }
 });
 
 const abrirModal = () => {
-    if (modalReceta) {
-        modalReceta.show();
-    }
+    modalReceta?.show();
 };
 
 defineExpose({ abrirModal });
 </script>
-
-<style scoped>
-.modal-body {
-    max-height: 60vh;
-    overflow-y: auto;
-}
-</style>

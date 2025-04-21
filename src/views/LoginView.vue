@@ -44,22 +44,25 @@
             <button class="btn btn-danger" @click="handleLogout">
                 Cerrar sesión
             </button>
-            <ListaFavoritos />
+            <FavoritosView />
         </div>
     </div>
 </template>
 <script setup>
 import { ref } from 'vue';
 import { useAuthStore } from '../stores/authStore';
-import ListaFavoritos from '../components/ListaFavoritos.vue';
+import FavoritosView from '../views/FavoritosView.vue';
+import { useRouter } from 'vue-router';
 
 const isRegistering = ref(false);
 const authStore = useAuthStore();
 const email = ref('');
 const password = ref('');
+const router = useRouter();
 
 const handleLogin = async () => {
     await authStore.loginUser(email.value, password.value);
+    router.push({ name: 'favoritos' });
 };
 
 const handleRegister = async () => {

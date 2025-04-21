@@ -1,10 +1,10 @@
 export interface Ingredients {
     original: string;
 }
+
 export interface IStep {
     number: number;
     step: string;
-
 }
 
 export interface IReceta {
@@ -15,6 +15,6 @@ export interface IReceta {
     extendedIngredients?: Ingredients[];
     analyzedInstructions?: {
         name: string;
-        steps: IStep[]
+        steps: IStep[];
     }[];
 }
